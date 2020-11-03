@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">Lista Herosów</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2 left">Filtruj:</div>
+      <div class="col-md-4">
+        <input type="text" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 left">
+        <h4>Filtrowanie po:</h4>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table" *ngIf="heroes && heroes.length">
+        <thead>
+          <tr>
+            <th>Nazwa</th>
+            <th>Team</th>
+            <th>Tożsamość</th>
+            <th>Wynagrodzenie</th>
+            <th>Siła</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hero of heroes">
+                <td>
+                    {{hero.name}}
+                </td>
+                <td>{{hero.team}}</td>
+                <td>{{hero.secretIdentity}}</td>
+                <td>{{hero.salary}}</td>
+                <td>
+                    {{hero.strength}}
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
