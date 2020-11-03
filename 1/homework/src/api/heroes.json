@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Iron Man",
+    "team": "Avengers",
+    "secretIdentity": "Tony Stark",
+    "salary": "0.99",
+    "description": "Man with iron suit",
+    "strength": 4.2
+  },
+  {
+    "id": 2,
+    "name": "Thor",
+    "team": "Avengers",
+    "secretIdentity": "Thor Odinson",
+    "salary": "10.99",
+    "description": "Norse god of thunder",
+    "strength": 4.5
+  },
+  {
+    "id": 3,
+    "name": "Superman",
+    "team": "Justice League",
+    "secretIdentity": "Clark Kent",
+    "salary": "3500",
+    "description": "Man of steel",
+    "strength": 5.0
+  },
+  {
+    "id": 4,
+    "name": "John Constantine",
+    "team": "Justice League Dark",
+    "secretIdentity": "John Constantine",
+    "salary": "15000",
+    "description": "Fights to keep balance between demons and angels",
+    "strength": 3.2
+  },
+  {
+    "id": 5,
+    "name": "Wonder Woman",
+    "team": "Justice League",
+    "secretIdentity": "Diana z Themysciry",
+    "salary": "10000",
+    "description": "Amazon warrior",
+    "strength": 4.4
+  }
+]
