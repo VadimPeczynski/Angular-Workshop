@@ -35,6 +35,7 @@ Do angular.json:
                     <th>Nazwa</th>
                     <th>Team</th>
                     <th>Tożsamość</th>
+		    <th>Wynagrodzenie</th>
                     <th>Siła</th>
                 </tr>
             </thead>
