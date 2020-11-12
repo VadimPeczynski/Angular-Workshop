@@ -1,0 +1,59 @@
+<div class="alert alert-success" *ngIf="showAlert">
+  <strong>{{alertText}}</strong>
+</div>
+<div class="card">
+  <div class="card-header">Lista Herosów</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2 left">Filtruj:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 left">
+        <h4>Filtrowanie po: {{ listFilter }}</h4>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table" *ngIf="heroes && heroes.length">
+        <thead>
+          <tr>
+            <th>
+              <button
+                class="btn"
+                type="button"
+                [ngClass]="showLogo ? 'btn-success' : 'btn-danger'"
+                (click)="toggleLogo()"
+              >
+                {{ showLogo ? "Ukryj" : "Pokaż" }} logo
+              </button>
+            </th>
+            <th>Nazwa</th>
+            <th>Team</th>
+            <th>Tożsamość</th>
+            <th>Wynagrodzenie</th>
+            <th>Siła</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hero of filteredHeroes">
+            <td>
+              <img class="logo" *ngIf="showLogo" [src]="hero.logoUrl" />
+            </td>
+            <td>
+              {{ hero.name }}
+            </td>
+            <td>{{ hero.team }}</td>
+            <td>{{ hero.secretIdentity | secret: "*" }}</td>
+            <!-- <td>{{ hero.salary | currency: "USD":"symbol":"1.2-2" }}</td> -->
+            <td>{{ hero.salary | number: "1.2-2" }} zł</td>
+            <td>
+              <app-fist [rating]="hero.strength" (fistRatingClicked)="onRatingClick($event)"></app-fist>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
