@@ -44,11 +44,11 @@ export interface Hero {
 6. Strength:
 <div class='crop'>
   <div style="width: 60px">
-    <span class="fas fa-fist-raised fist"></span>
-    <span class="fas fa-fist-raised fist"></span>
-    <span class="fas fa-fist-raised fist"></span>
-    <span class="fas fa-fist-raised fist"></span>
-    <span class="fas fa-fist-raised fist"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
   </div>
 </div>
 
