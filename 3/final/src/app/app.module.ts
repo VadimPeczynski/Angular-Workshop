@@ -9,6 +9,8 @@ import { FistComponent } from './shared/fist/fist.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api/http-client-in-memory-web-api.module';
+import { HeroDataService } from './hero-list/hero-data.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,14 @@ import { HttpClientModule } from '@angular/common/http';
     NavBarComponent,
     SecretPipe,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(HeroDataService, {
+      dataEncapsulation: false,
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

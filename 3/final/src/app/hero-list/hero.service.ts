@@ -8,12 +8,13 @@ import { tap, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class HeroService {
-  private heroesApi: string = '../../api/heroes.json';
+  //private heroesUrl: string = '../../api/heroes.json';
+  private heroesUrl = 'api/heroes';
 
   constructor(private http: HttpClient) {}
 
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesApi).pipe(
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
       tap((data) => console.log('All: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
