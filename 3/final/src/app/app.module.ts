@@ -8,6 +8,7 @@ import { SecretPipe } from './hero-list/secret.pipe';
 import { FistComponent } from './shared/fist/fist.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { HomeComponent } from './home/home.component';
     NavBarComponent,
     SecretPipe,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
