@@ -43,7 +43,7 @@
               <img class="logo" *ngIf="showLogo" [src]="hero.logoUrl" />
             </td>
             <td>
-              {{ hero.name }}
+              <a [routerLink]="['/heroes', hero.id]">{{ hero.name }}</a>
             </td>
             <td>{{ hero.team }}</td>
             <td>{{ hero.secretIdentity | secret: "*" }}</td>
