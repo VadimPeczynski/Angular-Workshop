@@ -137,3 +137,59 @@ const id = +route.url[1].path;
       alert("Nieprawidłowy id");
       this.router.navigate(['/heroes']);
     }
+
+18. Homework
+
+<div class='card border-primary' *ngIf="hero">
+  <div class='card-header'>
+      {{pageTitle + ': ' + hero?.name}}
+  </div>
+
+  <div class='card-body'>
+    <div class='row'>
+        <div class='col-md-6'>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Nazwa:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Kod produktu:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Opis:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Dostępność:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Cena:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Ocena:</div>
+                <div class='col-md-6 text-left'>
+                    <app-star [rating]='product.starRating'>
+                    </app-star>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-md-6'>
+            <img class='center-block img-responsive' 
+                 [style.width.px]='200' 
+                 [style.margin.px]='2' 
+                 [src]=''
+                 [title]='hero.name'>
+        </div>
+    </div>
+</div>
+
+<div class='card-footer'>
+    <a class='btn btn-default' (click)='onClick()' style='width:80px'>
+        <i class='fas fa-chevron-left'></i> Wstecz
+    </a>
+</div>
+</div>
