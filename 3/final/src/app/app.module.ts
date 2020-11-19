@@ -14,6 +14,7 @@ import { HeroDataService } from './hero-list/hero-data.service';
 import { RouterModule } from '@angular/router';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { httpInterceptorProviders } from './interceptors';
+import { HeroDetailGuard } from './hero-detail/hero-detail.guard';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,11 @@ import { httpInterceptorProviders } from './interceptors';
     }),
     RouterModule.forRoot([
       { path: 'heroes', component: HeroListComponent },
-      { path: 'heroes/:id', component: HeroDetailComponent },
+      {
+        path: 'heroes/:id',
+        component: HeroDetailComponent,
+        canActivate: [HeroDetailGuard],
+      },
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' },
