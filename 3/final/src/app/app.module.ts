@@ -13,6 +13,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api/http-c
 import { HeroDataService } from './hero-list/hero-data.service';
 import { RouterModule } from '@angular/router';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { httpInterceptorProviders } from './interceptors';
 
 @NgModule({
   declarations: [
@@ -36,10 +37,10 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
       { path: 'heroes/:id', component: HeroDetailComponent },
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: '**', redirectTo: 'home', pathMatch: 'full' }
-    ])
+      { path: '**', redirectTo: 'home', pathMatch: 'full' },
+    ]),
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
