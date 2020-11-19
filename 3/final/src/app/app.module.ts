@@ -11,6 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api/http-client-in-memory-web-api.module';
 import { HeroDataService } from './hero-list/hero-data.service';
+import { RouterModule } from '@angular/router';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { HeroDataService } from './hero-list/hero-data.service';
     HomeComponent,
     NavBarComponent,
     SecretPipe,
+    HeroDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,13 @@ import { HeroDataService } from './hero-list/hero-data.service';
     HttpClientInMemoryWebApiModule.forRoot(HeroDataService, {
       dataEncapsulation: false,
     }),
+    RouterModule.forRoot([
+      { path: 'heroes', component: HeroListComponent },
+      { path: 'heroes/:id', component: HeroDetailComponent },
+      { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', redirectTo: 'home', pathMatch: 'full' }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent],

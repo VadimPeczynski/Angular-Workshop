@@ -20,6 +20,11 @@ export class HeroService {
     );
   }
 
+  deleteHero(id: number): Observable<{}> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.delete(url).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string;
     if (error.error instanceof ErrorEvent) {
@@ -29,7 +34,8 @@ export class HeroService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       errorMessage =
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
+        `Backend returned code ${error.status}, ` +
+        `status text was: ${error.statusText}`;
     }
     console.error(error);
     return throwError(errorMessage);

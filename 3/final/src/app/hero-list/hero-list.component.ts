@@ -50,4 +50,14 @@ export class HeroListComponent implements OnInit {
     this.showAlert = true;
     this.alertText = text;
   }
+
+  deleteHero(id: number): void {
+    this.heroService.deleteHero(id).subscribe(() => {
+      const foundIndex = this.heroes.findIndex((item) => item.id === id);
+      if (foundIndex > -1) {
+        this.heroes.splice(foundIndex, 1);
+      }
+      this.filteredHeroes = this.heroes;
+    });
+  }
 }

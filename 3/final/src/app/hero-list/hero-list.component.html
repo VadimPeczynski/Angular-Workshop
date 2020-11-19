@@ -1,5 +1,5 @@
 <div class="alert alert-success" *ngIf="showAlert">
-  <strong>{{alertText}}</strong>
+  <strong>{{ alertText }}</strong>
 </div>
 <div class="card">
   <div class="card-header">Lista Herosów</div>
@@ -34,6 +34,7 @@
             <th>Tożsamość</th>
             <th>Wynagrodzenie</th>
             <th>Siła</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +50,16 @@
             <!-- <td>{{ hero.salary | currency: "USD":"symbol":"1.2-2" }}</td> -->
             <td>{{ hero.salary | number: "1.2-2" }} zł</td>
             <td>
-              <app-fist [rating]="hero.strength" (fistRatingClicked)="onRatingClick($event)"></app-fist>
+              <app-fist
+                [rating]="hero.strength"
+                (fistRatingClicked)="onRatingClick($event)"
+              ></app-fist>
+            </td>
+            <td>
+              <span
+                class="fas fa-times action"
+                (click)="deleteHero(hero.id)"
+              ></span>
             </td>
           </tr>
         </tbody>
