@@ -153,27 +153,20 @@ const id = +route.url[1].path;
                 <div class='col-md-6 text-left'></div>
             </div>
             <div class='row'>
-                <div class='col-md-3 text-left'>Kod produktu:</div>
+                <div class='col-md-3 text-left'>Team:</div>
                 <div class='col-md-6 text-left'></div>
             </div>
             <div class='row'>
-                <div class='col-md-3 text-left'>Opis:</div>
+                <div class='col-md-3 text-left'>Tożsamość:</div>
                 <div class='col-md-6 text-left'></div>
             </div>
             <div class='row'>
-                <div class='col-md-3 text-left'>Dostępność:</div>
+                <div class='col-md-3 text-left'>Wynagrodzenie:</div>
                 <div class='col-md-6 text-left'></div>
             </div>
             <div class='row'>
-                <div class='col-md-3 text-left'>Cena:</div>
+                <div class='col-md-3 text-left'>Siła:</div>
                 <div class='col-md-6 text-left'></div>
-            </div>
-            <div class='row'>
-                <div class='col-md-3 text-left'>Ocena:</div>
-                <div class='col-md-6 text-left'>
-                    <app-star [rating]='product.starRating'>
-                    </app-star>
-                </div>
             </div>
         </div>
 
