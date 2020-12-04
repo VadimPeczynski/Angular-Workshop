@@ -5,7 +5,7 @@
   <div class="card-body container">
     <form (ngSubmit)="onSubmit()" [formGroup]="heroForm">
       <div class="form-group">
-        <label for="name">{{'Name' | translate:{value: 'world'}}}</label>
+        <label for="name">{{ "Name" | translate: { value: "world" } }}</label>
         <input
           type="text"
           class="form-control"

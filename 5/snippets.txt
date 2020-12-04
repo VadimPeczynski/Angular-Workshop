@@ -180,7 +180,7 @@ onLanguageChange(): void {
 
 8. Tłumaczenie z parametrem
 
-{{ 'HELLO' | translate:param }}
+{{ 'HELLO' | translate:{param:1} }}
 
 9. Tłumaczenie z kodu
 
@@ -209,7 +209,11 @@ firebase login
 
 firebase init
 
-4. Deploy
+4. Testowanie
 
+firebase emulators:start
 
+5. Deploy
+
+firebase deploy --only hosting:nazwa-projektu-firebase
 

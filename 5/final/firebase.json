@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "angular-workshops",
-    "public": "public",
+    "public": "dist/HeroesAcademy",
     "ignore": [
       "firebase.json",
       "**/.*",
