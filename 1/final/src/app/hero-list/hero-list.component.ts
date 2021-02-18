@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-hero-list',
   templateUrl: './hero-list.component.html',
   styleUrls: ['./hero-list.component.scss'],
 })
-export class HeroListComponent implements OnInit {
-  pageTitle: string = 'Lista Herosów';
-  heroes: any[] = [
+export class HeroListComponent {
+  pageTitle = 'Lista Herosów';
+  heroes = [
     {
       id: 1,
       name: 'Iron Man',
@@ -27,8 +27,4 @@ export class HeroListComponent implements OnInit {
       strength: 4.5,
     },
   ];
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
