@@ -11,7 +11,12 @@
 
 3. Currency pipe:
 <td>{{ hero.salary | currency: "USD":"symbol":"1.2-2" }}</td>
-<!-- <td>{{ hero.salary | number: "1.2-2" }} zł</td> -->
+
+import localePL from '@angular/common/locales/pl';
+
+registerLocaleData(localePL);
+
+providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
 
 4. Custom pipe:
 let result = '';

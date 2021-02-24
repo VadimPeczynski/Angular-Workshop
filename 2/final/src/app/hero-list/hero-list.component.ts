@@ -8,8 +8,8 @@ import { HeroService } from './hero.service';
   styleUrls: ['./hero-list.component.scss'],
 })
 export class HeroListComponent implements OnInit {
-  pageTitle: string = 'Lista Herosów';
-  showLogo: boolean = false;
+  pageTitle = 'Lista Herosów';
+  showLogo = false;
   showAlert = false;
   alertText = '';
   filteredHeroes: Hero[] = [];
