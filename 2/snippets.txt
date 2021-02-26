@@ -55,3 +55,8 @@ export interface Hero {
 div {
   cursor: pointer;
 }
+
+8. Alert
+<div class="alert alert-success" *ngIf="showAlert">
+  <strong>{{ alertText }}</strong>
+</div>
