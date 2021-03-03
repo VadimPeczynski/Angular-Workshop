@@ -1,28 +1,19 @@
-1. Upgrade do wersji 11
-
-ng update @angular/core @angular/cli
-
-2. Angular CLI do wersji 11
-
-npm uninstall -g @angular-cli
-npm install -g @angular/cli@latest
-
-3. Plik json
+1. Plik json
 
 private heroesApi: string = '../../api/heroes.json';
 
-4. Pobieranie danych
+2. Pobieranie danych
 
 this.http.get<Hero[]>(this.heroesApi).pipe(
       tap((data) => console.log('All: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
 
-5. Import operatorów
+3. Import operatorów
 
 import { tap, catchError } from 'rxjs/operators';
 
-6. Obsługa błedów
+4. Obsługa błedów
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string;
@@ -40,15 +31,15 @@ import { tap, catchError } from 'rxjs/operators';
     return throwError(errorMessage);
   }
 
-6. ngcc
+5. ngcc
 
 "postinstall": "ngcc"
 
-7. Instalacja WebAPI in Memory
+6. Instalacja WebAPI in Memory
 
 npm i angular-in-memory-web-api --save
 
-8. Inicjalizacja modułu
+7. Inicjalizacja modułu
 
 HttpClientInMemoryWebApiModule.forRoot(HeroData, {
       dataEncapsulation: false,
