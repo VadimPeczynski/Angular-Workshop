@@ -60,3 +60,11 @@ div {
 <div class="alert alert-success" *ngIf="showAlert">
   <strong>{{ alertText }}</strong>
 </div>
+
+9. Filtrowanie
+filterHeroes(filterBy: string): Hero[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.heroes.filter((hero: Hero) => {
+      return hero.name.toLocaleLowerCase().indexOf(filterBy) !== -1;
+    });
+  }
