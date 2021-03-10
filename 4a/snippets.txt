@@ -1,0 +1,366 @@
+1. Pobieranie danych
+
+this.http.get<Hero[]>(this.heroesApi).pipe(
+      tap((data) => console.log('All: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+
+2. Import operatorów
+
+import { tap, catchError } from 'rxjs/operators';
+
+3. Obsługa błedów
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage: string;
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = `An error occurred: ${error.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      errorMessage =
+        `Backend returned code ${error.status}, ` +
+        `status text was: ${error.statusText}`;
+    }
+    console.error(error);
+    return throwError(errorMessage);
+  }
+
+4. Pobieranie danych z WebAPI
+
+private heroesUrl = 'http://localhost:3001/heroes';
+
+5. HTTP Delete
+
+deleteHero(id: number): Observable<{}> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.delete(url).pipe(catchError(this.handleError));
+  }
+
+6. Usuwanie bohatera (HTML):
+
+<span
+                class="fas fa-times action"
+                (click)="deleteHero(hero)"
+              ></span>
+
+7. Usuwanie bohatera:
+
+if (hero && hero.id) {
+      if (confirm(`Czy chcesz usunąć bohatera: ${hero.name}?`)) {
+        this.heroService.deleteHero(hero.id).subscribe(() => {
+          const foundIndex = this.heroes.findIndex(
+            (item) => item.id === hero.id
+          );
+          if (foundIndex > -1) {
+            this.heroes.splice(foundIndex, 1);
+          }
+          this.filteredHeroes = this.heroes;
+        });
+      }
+    }
+
+8. Request headers
+
+const headerReq = request.clone({
+      headers: request.headers
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'my-auth-token'),
+    });
+
+9. Guard
+
+const id = +route.url[1].path;
+    if (isNaN(id) || id < 1) {
+      alert("Nieprawidłowy id");
+      this.router.navigate(['/heroes']);
+    }
+
+10. Get by id (service)
+
+getHero(id: number): Observable<Hero> {
+    return this.http.get<Hero>(this.heroesUrl + '/' + id).pipe(
+      tap((data) => console.log('Hero: ' + JSON.stringify(data)))
+    );
+  }
+
+11. Get by id (component)
+
+this.heroService.getHero(id).subscribe((hero: Hero) => {
+      this.hero = hero;
+    });
+
+12. Card content
+
+<div class="card border-primary" *ngIf="hero">
+  <div class="card-header">
+    {{ pageTitle + ": " + hero.name }}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3 text-left">Nazwa:</div>
+          <div class="col-md-6 text-left">{{ hero.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Team:</div>
+          <div class="col-md-6 text-left">{{ hero.team }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Tożsamość:</div>
+          <div class="col-md-6 text-left">{{ hero.secretIdentity }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Opis:</div>
+          <div class="col-md-6 text-left">{{ hero.description }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Wynagrodzenie:</div>
+          <div class="col-md-6 text-left">
+            {{ hero.salary | number: "1.2-2" }} zł
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Siła:</div>
+          <div class="col-md-6 text-left">
+            <app-fist [rating]="hero.strength"></app-fist>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <img
+          class="img-responsive"
+          [style.width.px]="200"
+          [style.margin.px]="2"
+          [src]="hero.logoUrl"
+          [title]="hero.name"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="onClick()">
+      <i class="fa fa-chevron-left"></i> Wstecz
+    </button>
+  </div>
+</div>
+
+13. Dodanie nowego bohatera
+
+<div class="card-footer">
+    <button class="btn btn-success" [routerLink]="['/heroesEdit']">
+      Dodaj herosa
+    </button>
+  </div>
+
+14. Formularz
+
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+
+  <div class="card-body container">
+    <form>
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input type="text" class="form-control" id="name" />
+      </div>
+      <div class="form-group">
+        <label for="team">Team</label>
+        <input type="text" class="form-control" id="team" />
+      </div>
+      <div class="form-group">
+        <label for="secretIdentity">Tożsamość</label>
+        <input type="text" class="form-control" id="secretIdentity" />
+      </div>
+      <div class="form-group">
+        <label for="salary">Wynagrodzenie</label>
+        <input type="number" class="form-control" id="salary" />
+      </div>
+      <div class="form-group">
+        <label for="salary">Siła</label>
+        <input type="number" class="form-control" id="salary" />
+      </div>
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea class="form-control" id="description" rows="3"></textarea>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="active" />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="active"
+        />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <button type="submit" class="btn btn-primary mr-2">Dodaj</button>
+      <button type="button" class="btn btn-secondary">Anuluj</button>
+    </form>
+  </div>
+</div>
+
+15. NgModel
+
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body container">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Nazwa bohatera"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="team">Team</label>
+        <select class="form-control" id="team" name="team" ngModel>
+          <option value="" selected disabled hidden>Wybierz</option>
+          <option *ngFor="let team of teams">{{ team }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="secretIdentity"
+          >Tożsamość
+          <span
+            class="fas fa-info-circle ml-2"
+            (click)="onIconClick()"
+            [ngStyle]="{ color: isPasswordVisible ? 'red' : 'green' }"
+          ></span>
+        </label>
+        <input
+          [type]="inputType"
+          class="form-control"
+          id="secretIdentity"
+          name="secretIdentity"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Wynagrodzenie</label>
+        <input
+          type="number"
+          class="form-control"
+          id="salary"
+          name="salary"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Siła</label>
+        <input
+          type="number"
+          class="form-control"
+          id="strength"
+          name="strength"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          name="description"
+          ngModel
+        ></textarea>
+      </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="active"
+          name="active"
+          ngModel
+        />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <button type="submit" class="btn btn-primary mr-2">Dodaj</button>
+      <button type="button" class="btn btn-secondary">Anuluj</button>
+    </form>
+  </div>
+  {{ form.value | json }}
+</div>
+
+16. Nowy bohater
+
+hero: Hero = {
+    name: null,
+    team: null,
+    secretIdentity: null,
+    salary: 0,
+    strength: 0,
+    description: '',
+    active: false,
+    logoUrl: '',
+  } as Hero;
+
+17. Testowanie parametrów
+
+#propertyTest="ngModel"
+
+<h5>dirty: {{ propertyTest.dirty }}</h5>
+      <h5>pristine: {{ propertyTest.pristine }}</h5>
+      <h5>touched: {{ propertyTest.touched }}</h5>
+      <h5>untouched: {{ propertyTest.untouched }}</h5>
+      <h5>valid: {{ propertyTest.valid }}</h5>
+      <h5>invalid: {{ propertyTest.invalid }}</h5>
+
+18. Walidacja
+
+<div
+          class="alert alert-danger"
+          [hidden]="nameField.valid || nameField.untouched"
+        >
+          Wprowadź imię
+        </div>
+
+19. Tworzenie bohatera
+
+createHero(hero: Hero) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newHero = { ...hero, id: null };
+    return this.http
+      .post<Hero>(this.heroesUrl, newHero, { headers })
+      .pipe(tap((data) => console.log('createHero: ' + JSON.stringify(data))));
+  }
+
+20. Edycja bohatera
+
+<button
+      type="button"
+      class="btn btn-success"
+      [routerLink]="['/heroesEdit', hero.id]"
+    >
+      Edycja bohatera
+    </button>
+
+21. Aktualizowanie
+
+  updateHero(hero: Hero) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.heroesUrl}/${hero.id}`;
+    return this.http
+      .put<Hero>(url, hero, { headers })
+      .pipe(
+        tap(() => console.log('updateHero: ' + hero.id)),
+        map(() => hero)
+      );
+  }
