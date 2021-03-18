@@ -1,0 +1,376 @@
+Template driven forms
+1. Kopiowanie danych
+
+this.hero = { ...hero };
+
+2. Stylowanie błędu
+
+.ng-invalid {
+  border: 1px solid red;
+}
+
+3. Walidacja
+
+<div
+          class="alert alert-danger"
+          [hidden]="nameField.valid || nameField.untouched"
+        >
+          Wprowadź imię
+        </div>
+
+
+4. Submit
+
+  onSubmit(form: NgForm): void {
+    if (form.valid) {
+      this.heroService.createHero(this.hero).subscribe(() => {
+          this.router.navigate(['/heroes']);
+        });
+    }
+  }
+
+5. Tworzenie bohatera
+
+createHero(hero: Hero): Observable<Hero> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newHero = { ...hero, id: null };
+    return this.http
+      .post<Hero>(this.heroesUrl, newHero, { headers })
+      .pipe(tap((data) => console.log('createHero: ' + JSON.stringify(data))));
+  }
+
+6. Aktualizowanie
+
+  updateHero(hero: Hero): Observable<Hero> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.heroesUrl}/${hero.id}`;
+    return this.http
+      .put<Hero>(url, hero, { headers })
+      .pipe(
+        tap(() => console.log('updateHero: ' + hero.id)),
+        map(() => hero)
+      );
+  }
+
+7. Wybór create/edit
+
+if (!this.hero.id) {
+        this.heroService.createHero(this.hero).subscribe(() => {
+          this.router.navigate(['/heroes']);
+        });
+      } else {
+        this.heroService.updateHero(this.hero).subscribe(() => {
+          this.router.navigate(['/heroes']);
+        });
+      }
+
+8. Walidacja 
+[ngClass]="{
+            'is-invalid':
+              form.submitted && nameField.invalid
+          }"
+
+9. Komunikaty dla różnych typów błędów
+
+<div class="alert alert-danger"
+          [hidden]="!form.submitted || nameField.valid">
+          <span *ngIf="nameField.errors?.required">
+            Proszę podaj imię bohatera.
+          </span>
+          <span *ngIf="nameField.errors?.minlength">
+            Imię musi być dłuższe niż 3 litery.
+          </span>
+        </div>
+
+10. Eventy
+
+onNameBlur(field: NgModel): void {
+    if (field.invalid) {
+      console.warn('Nazwa niepoprawna');
+    }
+  }
+
+ReactiveForms
+
+1. Inicjalizacja FormGroup
+
+heroForm: FormGroup;
+
+this.heroForm = new FormGroup({
+      name: new FormControl(),
+      team: new FormControl(),
+      secretIdentity: new FormControl(),
+      salary: new FormControl(),
+      strength: new FormControl(),
+      description: new FormControl(),
+      active: new FormControl(),
+    });
+
+2. Template
+
+[formGroup]="heroForm"
+
+formControlName="name"
+formControlName="team"
+formControlName="secretIdentity"
+formControlName="salary"
+formControlName="strength"
+formControlName="description"
+formControlName="active"
+
+3. setValue
+
+this.heroForm.setValue({
+          name: hero.name,
+          team: hero.team,
+          secretIdentity: hero.secretIdentity,
+          salary: hero.salary,
+          strength: hero.strength,
+          description: hero.description,
+          active: hero.active,
+        });
+
+4. FormBuilder
+
+this.heroForm = this.fb.group({
+      name: null,
+      team: null,
+      secretIdentity: '',
+      salary: 0,
+      strength: 0,
+      description: '',
+      active: true,
+    });
+
+5. Walidacja
+
+this.heroForm = this.fb.group({
+      name: [null, [Validators.required, Validators.minLength(3)]],
+      team: [null, Validators.required],
+      secretIdentity: '',
+      salary: [0, Validators.min(0)],
+      strength: [0, [Validators.min(0), Validators.max(5)]],
+      description: '',
+      active: true,
+    });
+
+6. Funkcja walidatora
+
+function strengthRange(control:AbstractControl): {[key: string]: boolean} | null 
+{
+  if (
+    control.value != null &&
+    (isNaN(control.value) || control.value < 0 || control.value > 5)
+  ) {
+    return { strengthRange: true };
+  }
+  return null;
+}
+
+7. Wyświetlenie błędu
+
+<div
+          class="alert alert-danger"
+          [hidden]="!isSubmitted || heroForm.get('strength').valid"
+        >
+          <span *ngIf="heroForm.get('strength').errors?.strengthRange">
+            Wartość między 0 a 5.
+          </span>
+        </div>
+
+8. Funkcja walidatora z parametrami
+
+function strengthRange(min: number, max: number): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: boolean } | null => {
+    if (
+      control.value != null &&
+      (isNaN(control.value) || control.value < min || control.value > max)
+    ) {
+      return { strengthRange: true };
+    }
+    return null;
+  };
+}
+
+9. Obserwowanie kontrolki
+activeValueSubs: Subscription = new Subscription();
+
+this.activeValueSubs = this.heroForm
+      .get('active')
+      .valueChanges.subscribe((value: boolean) => {
+        this.activeChanged(value);
+      });
+
+10. Wyświetlanie wiadomości z błędem
+const nameControl = this.heroForm.get('name');
+    this.nameValueSubs = nameControl.valueChanges.subscribe(
+      (value: boolean) => {
+        this.setErrorMessage(nameControl);
+      }
+    );
+
+11. Kopiowanie danych z formularza
+
+const hero = { ...this.hero, ...this.heroForm.value };
+
+
+Lokalizacja
+
+1. Instalacja
+
+npm install @ngx-translate/core --save
+
+2. Inicjalizacja
+
+import {TranslateModule} from '@ngx-translate/core';
+
+TranslateModule.forRoot()
+
+3. Loader
+
+npm install @ngx-translate/http-loader --save
+
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
+loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+
+4. Załadowanie tłumaczeń
+constructor(translate: TranslateService) {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('pl');
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('pl');
+  }
+
+5. Ekstrakcja tłumaczeń
+
+npm install @biesbjerg/ngx-translate-extract --save-dev
+
+6. Skrypty
+
+"i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
+  "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/pl.json ./src/assets/i18n/en.json --clean --format json",
+
+7. Zmiana języka
+
+<li class="nav-item dropdown">
+        <select
+          class="form-control"
+          id="language"
+          [(ngModel)]="language"
+          (change)="onLanguageChange()"
+        >
+          <option value="pl" selected>pl</option>
+          <option value="en">en</option>
+        </select>
+      </li>
+
+onLanguageChange(): void {
+    this.translate.use(this.language);
+  }
+
+8. Tłumaczenie z parametrem
+
+{{ 'HELLO' | translate:{param:1} }}
+
+9. Tłumaczenie z kodu
+
+translate.get('HELLO', {value: 'world'}).subscribe((res: string) => {
+    console.log(res);
+    //=> 'hello world'
+});
+
+Testy
+
+1. Testowanie wartości
+
+describe('ngOnChanges', () => {
+    it('should set fistWidth with the correct value', () => {
+      //Arrange
+      component.rating = 5;
+      //Act
+      component.ngOnChanges();
+      //Assert
+      expect(component.fistWidth).toBe(60);
+    });
+  });
+
+2. Testowanie wywołania funkcji
+
+  describe('onClick', () => {
+    it('should call fistRatingClicked.emit with proper prompt', () => {
+      //Arrange
+      const rating = 5;
+      component.rating = rating;
+      spyOn(component.fistRatingClicked, 'emit');
+      //Act
+      component.onClick();
+      //Assert
+      expect(component.fistRatingClicked.emit).toHaveBeenCalledWith(
+        `Kliknięty rating to: ${rating}`
+      );
+    });
+  });
+
+3. Wiele wartości
+
+import * as using from 'jasmine-data-provider';
+
+describe('ngOnChanges', () => {
+    const dataProvider = [
+      { value: null, expected: 0 },
+      { value: 1, expected: 12 },
+      { value: 2, expected: 24 },
+      { value: 3, expected: 36 },
+      { value: 4, expected: 48 },
+      { value: 5, expected: 60 },
+    ];
+
+    using(dataProvider, ({ value, expected }) => {
+      it(`should set fistWidth with ${expected} if rating is ${value}`, () => {
+        //Arrange
+        component.rating = value;
+        //Act
+        component.ngOnChanges();
+        //Assert
+        expect(component.fistWidth).toBe(expected);
+      });
+    });
+  });
+
+
+Deploy aplikacji
+
+0. Budowanie aplikacji
+
+ng build --prod
+
+1. Instalacja
+
+npm install -g firebase-tools
+
+2. Logowanie
+
+firebase login
+
+3. Inicjalizacja
+
+firebase init
+
+4. Testowanie
+
+firebase emulators:start
+
+5. Deploy
+
+firebase deploy --only hosting:nazwa-projektu-firebase
+
