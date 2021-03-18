@@ -192,16 +192,13 @@ function strengthRange(min: number, max: number): ValidatorFn {
   };
 }
 
-9. Obserwowanie kontrolki
-activeValueSubs: Subscription = new Subscription();
+9. Wyświetlanie wiadomości z błędem
+nameErrorMessage: string = '';
+  private validationMessages = {
+    required: 'Proszę podaj imię bohatera.',
+    minlength: 'Imię musi być dłuższe niż 3 litery.',
+  };
 
-this.activeValueSubs = this.heroForm
-      .get('active')
-      .valueChanges.subscribe((value: boolean) => {
-        this.activeChanged(value);
-      });
-
-10. Wyświetlanie wiadomości z błędem
 const nameControl = this.heroForm.get('name');
     this.nameValueSubs = nameControl.valueChanges.subscribe(
       (value: boolean) => {
@@ -209,7 +206,16 @@ const nameControl = this.heroForm.get('name');
       }
     );
 
-11. Kopiowanie danych z formularza
+setErrorMessage(control: AbstractControl): void {
+    this.nameErrorMessage = '';
+    if ((control.touched || control.dirty) && control.errors) {
+      this.nameErrorMessage = Object.keys(control.errors)
+        .map((key) => this.validationMessages[key])
+        .join(', ');
+    }
+  }
+
+10. Kopiowanie danych z formularza
 
 const hero = { ...this.hero, ...this.heroForm.value };
 
