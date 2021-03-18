@@ -17,6 +17,12 @@ export class HeroService {
       .pipe(catchError(this.handleError));
   }
 
+  getHero(id: number): Observable<Hero> {
+    return this.http
+      .get<Hero>(this.heroesUrl + '/' + id)
+      .pipe(catchError(this.handleError));
+  }
+
   deleteHero(id: number): Observable<{}> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete(url).pipe(catchError(this.handleError));

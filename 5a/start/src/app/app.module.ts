@@ -31,6 +31,7 @@ import { HeroEditComponent } from './hero-edit/hero-edit.component';
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
+      { path: 'heroesEdit/:id', component: HeroEditComponent },
       { path: 'heroes', component: HeroListComponent },
       { path: 'heroesEdit', component: HeroEditComponent },
       {

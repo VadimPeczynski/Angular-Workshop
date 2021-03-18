@@ -11,11 +11,17 @@ import { HeroService } from '../hero-list/hero.service';
 export class HeroDetailsComponent implements OnInit {
   pageTitle = 'Informacje o herosie';
   hero = {} as Hero;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private heroService: HeroService
+  ) {}
 
   ngOnInit(): void {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.pageTitle += `: ${id}`;
+    this.heroService.getHero(id).subscribe((hero: Hero) => {
+      this.hero = hero;
+    });
   }
 
   onClick(): void {

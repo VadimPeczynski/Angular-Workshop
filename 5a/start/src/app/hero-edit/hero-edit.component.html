@@ -18,12 +18,24 @@
           #propertyTest="ngModel"
         />
       </div>
-      <h5>dirty: {{ propertyTest.dirty }}</h5>
-      <h5>pristine: {{ propertyTest.pristine }}</h5>
-      <h5>touched: {{ propertyTest.touched }}</h5>
-      <h5>untouched: {{ propertyTest.untouched }}</h5>
-      <h5>valid: {{ propertyTest.valid }}</h5>
-      <h5>invalid: {{ propertyTest.invalid }}</h5>
+      <h5 [ngStyle]="{ color: propertyTest.dirty ? 'green' : 'red' }">
+        dirty: {{ propertyTest.dirty }}
+      </h5>
+      <h5 [ngStyle]="{ color: propertyTest.pristine ? 'green' : 'red' }">
+        pristine: {{ propertyTest.pristine }}
+      </h5>
+      <h5 [ngStyle]="{ color: propertyTest.touched ? 'green' : 'red' }">
+        touched: {{ propertyTest.touched }}
+      </h5>
+      <h5 [ngStyle]="{ color: propertyTest.untouched ? 'green' : 'red' }">
+        untouched: {{ propertyTest.untouched }}
+      </h5>
+      <h5 [ngStyle]="{ color: propertyTest.valid ? 'green' : 'red' }">
+        valid: {{ propertyTest.valid }}
+      </h5>
+      <h5 [ngStyle]="{ color: propertyTest.invalid ? 'green' : 'red' }">
+        invalid: {{ propertyTest.invalid }}
+      </h5>
       <div class="form-group">
         <label for="team">Team</label>
         <select
@@ -40,7 +52,7 @@
         <label for="secretIdentity"
           >Tożsamość
           <span
-            class="fas fa-info-circle ml-2"
+            class="fas fa-info-circle ml-2 action"
             (click)="onIconClick()"
             [ngStyle]="{ color: isPasswordVisible ? 'red' : 'green' }"
           ></span
@@ -94,7 +106,9 @@
         <label class="form-check-label" for="active">Aktywny</label>
       </div>
       <button type="submit" class="btn btn-primary mr-2">Dodaj</button>
-      <button type="button" class="btn btn-secondary">Anuluj</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">
+        Anuluj
+      </button>
     </form>
   </div>
   {{ hero | json }}
