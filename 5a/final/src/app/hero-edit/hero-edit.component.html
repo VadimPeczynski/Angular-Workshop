@@ -1,0 +1,111 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body container">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Nazwa bohatera"
+          [(ngModel)]="hero.name"
+          required
+          minlength="3"
+          #nameField="ngModel"
+          [ngClass]="{
+            'is-invalid': form.submitted && nameField.invalid
+          }"
+          (blur)="onNameBlur(nameField)"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="!form.submitted || nameField.valid"
+        >
+          <span *ngIf="nameField.errors?.required">
+            Proszę podaj imię bohatera.
+          </span>
+          <span *ngIf="nameField.errors?.minlength">
+            Imię musi być dłuższe niż 3 litery.
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="team">Team</label>
+        <select
+          class="form-control"
+          id="team"
+          name="team"
+          [(ngModel)]="hero.team"
+        >
+          <option value="" selected disabled hidden>Wybierz</option>
+          <option *ngFor="let team of teams">{{ team }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="secretIdentity"
+          >Tożsamość
+          <span
+            class="fas fa-info-circle ml-2 action"
+            (click)="onIconClick()"
+            [ngStyle]="{ color: isPasswordVisible ? 'red' : 'green' }"
+          ></span
+        ></label>
+        <input
+          [type]="inputType"
+          class="form-control"
+          id="secretIdentity"
+          name="secretIdentity"
+          [(ngModel)]="hero.secretIdentity"
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Wynagrodzenie</label>
+        <input
+          type="number"
+          class="form-control"
+          id="salary"
+          name="salary"
+          [(ngModel)]="hero.salary"
+        />
+      </div>
+      <div class="form-group">
+        <label for="strength">Siła</label>
+        <input
+          type="number"
+          class="form-control"
+          id="strength"
+          name="strength"
+          [(ngModel)]="hero.strength"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          name="description"
+          [(ngModel)]="hero.description"
+        ></textarea>
+      </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="active"
+          name="active"
+          [(ngModel)]="hero.active"
+        />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <button type="submit" class="btn btn-primary mr-2">Zapisz</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">
+        Anuluj
+      </button>
+    </form>
+  </div>
+</div>
