@@ -1,0 +1,99 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body container">
+    <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+          placeholder="Nazwa bohatera"
+          [ngClass]="{
+            'is-invalid': nameErrorMessage
+          }"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="!isSubmitted || heroForm.get('name').valid"
+        >
+          {{ nameErrorMessage }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="team">Team</label>
+        <select class="form-control" id="team" formControlName="team">
+          <option value="null" selected disabled hidden>Wybierz</option>
+          <option *ngFor="let team of teams">{{ team }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="secretIdentity"
+          >Tożsamość
+          <span
+            class="fas fa-info-circle ml-2 action"
+            (click)="onIconClick()"
+            [ngStyle]="{ color: isPasswordVisible ? 'red' : 'green' }"
+          ></span
+        ></label>
+        <input
+          [type]="inputType"
+          class="form-control"
+          id="secretIdentity"
+          formControlName="secretIdentity"
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Wynagrodzenie</label>
+        <input
+          type="number"
+          class="form-control"
+          id="salary"
+          formControlName="salary"
+        />
+      </div>
+      <div class="form-group">
+        <label for="strength">Siła</label>
+        <input
+          type="number"
+          class="form-control"
+          id="strength"
+          formControlName="strength"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="!isSubmitted || heroForm.get('strength').valid"
+        >
+          <span *ngIf="heroForm.get('strength').errors?.strengthRange">
+            Proszę podaj wartość pomiędzy 0 a 5.
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="active"
+          formControlName="active"
+        />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <button type="submit" class="btn btn-primary mr-2">Dodaj</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">
+        Anuluj
+      </button>
+    </form>
+  </div>
+</div>
