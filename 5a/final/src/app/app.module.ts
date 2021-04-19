@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HeroListComponent } from './hero-list/hero-list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SecretPipe } from './hero-list/secret.pipe';
 import { FistComponent } from './shared/fist/fist.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -29,6 +29,7 @@ import { HeroEditComponent } from './hero-edit/hero-edit.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'heroesEdit/:id', component: HeroEditComponent },

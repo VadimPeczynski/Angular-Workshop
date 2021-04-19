@@ -3,45 +3,28 @@
     {{ pageTitle }}
   </div>
   <div class="card-body container">
-    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Nazwa</label>
         <input
           type="text"
           class="form-control"
           id="name"
-          name="name"
           placeholder="Nazwa bohatera"
-          [(ngModel)]="hero.name"
-          required
-          minlength="3"
-          #nameField="ngModel"
+          formControlName="name"
+          (blur)="onNameBlur()"
           [ngClass]="{
-            'is-invalid': form.submitted && nameField.invalid
+            'is-invalid': nameErrorMessage
           }"
-          (blur)="onNameBlur(nameField)"
         />
-        <div
-          class="alert alert-danger"
-          [hidden]="!form.submitted || nameField.valid"
-        >
-          <span *ngIf="nameField.errors?.required">
-            Proszę podaj imię bohatera.
-          </span>
-          <span *ngIf="nameField.errors?.minlength">
-            Imię musi być dłuższe niż 3 litery.
-          </span>
-        </div>
+        <span class="invalid-feedback">
+          {{ nameErrorMessage }}
+        </span>
       </div>
       <div class="form-group">
         <label for="team">Team</label>
-        <select
-          class="form-control"
-          id="team"
-          name="team"
-          [(ngModel)]="hero.team"
-        >
-          <option value="" selected disabled hidden>Wybierz</option>
+        <select class="form-control" id="team" formControlName="team">
+          <option value="null" selected disabled hidden>Wybierz</option>
           <option *ngFor="let team of teams">{{ team }}</option>
         </select>
       </div>
@@ -58,8 +41,7 @@
           [type]="inputType"
           class="form-control"
           id="secretIdentity"
-          name="secretIdentity"
-          [(ngModel)]="hero.secretIdentity"
+          formControlName="secretIdentity"
         />
       </div>
       <div class="form-group">
@@ -68,8 +50,7 @@
           type="number"
           class="form-control"
           id="salary"
-          name="salary"
-          [(ngModel)]="hero.salary"
+          formControlName="salary"
         />
       </div>
       <div class="form-group">
@@ -78,9 +59,16 @@
           type="number"
           class="form-control"
           id="strength"
-          name="strength"
-          [(ngModel)]="hero.strength"
+          formControlName="strength"
         />
+        <div
+          class="alert alert-danger"
+          [hidden]="!isSubmitted || heroForm.get('strength').valid"
+        >
+          <span *ngIf="heroForm.get('strength').errors?.strengthRange">
+            Wartość między 0 a 5.
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Opis</label>
@@ -88,8 +76,7 @@
           class="form-control"
           id="description"
           rows="3"
-          name="description"
-          [(ngModel)]="hero.description"
+          formControlName="description"
         ></textarea>
       </div>
       <div class="form-group form-check">
@@ -97,8 +84,7 @@
           type="checkbox"
           class="form-check-input"
           id="active"
-          name="active"
-          [(ngModel)]="hero.active"
+          formControlName="active"
         />
         <label class="form-check-label" for="active">Aktywny</label>
       </div>
