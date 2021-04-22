@@ -9,11 +9,17 @@ import { FistComponent } from './shared/fist/fist.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
 import { HeroDetailsComponent } from './hero-details/hero-details.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { httpInterceptorProviders } from './interceptors';
 import { HeroDetailsGuard } from './hero-details/hero-details.guard';
 import { HeroEditComponent } from './hero-edit/hero-edit.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -30,6 +36,12 @@ import { HeroEditComponent } from './hero-edit/hero-edit.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule.forRoot({loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient]
+  }}
+),
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'heroesEdit/:id', component: HeroEditComponent },
